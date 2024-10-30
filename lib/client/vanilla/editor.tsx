@@ -143,7 +143,9 @@ function Editor({ standaloneServer = false }) {
   const loadTheme = async (index: number) => {
     const baseUrl = getBaseUrl(standaloneServer)
     const url = `${baseUrl}/api/builder/handle?type=theme&name=${themes[index].folder}`
-    const componentsList = await fetch(url).then((r) => r.json())
+    const componentsList = await fetch(url)
+      .then((r) => r.json())
+      .catch((err) => console.error('loadTheme error: ', err))
     return componentsList
   }
 
@@ -162,7 +164,9 @@ function Editor({ standaloneServer = false }) {
   const loadPage = async () => {
     const baseUrl = getBaseUrl(standaloneServer)
     const url = `${baseUrl}/api/builder/handle?type=data&path=${location.pathname}`
-    const data = await fetch(url).then((r) => r.text())
+    const data = await fetch(url)
+      .then((r) => r.text())
+      .catch((err) => console.error('loadPage error: ', err))
     return data
   }
 
@@ -188,7 +192,9 @@ function Editor({ standaloneServer = false }) {
   }
 
   useEffect(() => {
-    loadPage().then((html) => (canvasRef.current!.innerHTML = html))
+    loadPage()
+      .then((html) => (canvasRef.current!.innerHTML = html))
+      .catch((err) => console.error('loadPage error in useEffect: ', err))
     loadThemeComponents(themeIndex)
 
     const observer = onDomChange()
