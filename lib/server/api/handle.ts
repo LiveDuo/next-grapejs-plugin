@@ -110,12 +110,13 @@ const handleData = async (req: NextApiRequest, res: NextApiResponse): Promise<vo
 
 const getPackagePath = () => {
   const pathCurrent = path.dirname(require.resolve('destack/package.json'))
-  if (pathCurrent?.startsWith('(api)')) {
+  if (pathCurrent?.startsWith('(api)') || pathCurrent.startsWith('(rsc)')) {
     return path.join(process.cwd() as string, '..', pathCurrent as string)
   } else {
     return pathCurrent as string
   }
 }
+export { getPackagePath }
 
 const handleAsset = async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
   // check method
@@ -172,4 +173,4 @@ const handleEditor = async (req: NextApiRequest, res: NextApiResponse): Promise<
 export { handleEditor }
 
 const config = { api: { bodyParser: false } }
-export { config }
+export { config, fs, path }

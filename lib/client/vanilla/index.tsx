@@ -19,14 +19,14 @@ const ContentProvider: React.FC<ContentProviderBaseProps> = ({ data, standaloneS
   const [templateData, setTemplateData] = useState<string | undefined>()
 
   useEffect(() => {
-    if (data) {
+    if (data && data?.length > 0) {
       const url = location.pathname === '/' ? '/' : `${location.pathname}.html`
       const _templateData = data?.find(({ name }: dataType) => name === url)
       setTemplateData(_templateData.content)
     }
   }, [])
 
-  if (data)
+  if (data && data?.length > 0)
     return (
       <>
         <div id="page" dangerouslySetInnerHTML={{ __html: templateData! }} />
